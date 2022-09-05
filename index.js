@@ -1,29 +1,37 @@
-// CALCULADOR DE PROMEDIO
+// CARRITO DE COMPRA DE FACULTAD
 
-let notaUno = parseInt(prompt("Ingrese nota de su primer cuatrimestre: "));
-let notaDos = parseInt(prompt("Ingrese nota de su segundo cuatrimestre"));
-let notaTres = parseInt(prompt("Ingrese nota de su tercer cuatrimestre"));
+// Cambie a un carrito de compra de facultad porque se me complicaba mucho con el anterior codigo
 
+let stockLibros = [
+    {id: 1, nombre: "Libro Biologia", cantidad: 1, precio: 1200, img: "./img/librobiologia.jpg"},
+    {id: 2, nombre: "Libro Quimica", cantidad: 1, precio: 1350, img: "./img/Libroquimica.jpg"},
+    {id: 3, nombre: "Libro Anatomia", cantidad: 1, precio: 1150, img: "./img/libroanatomia.jpg"},
+    {id: 4, nombre: "Libro Fisica", cantidad: 1, precio: 1080, img: "./img/librofisica.jpg"}
+]
 
-function promedio(notaUno,notaDos,notaTres) {
-    while(notaUno, notaDos, notaTres) {
-        if(notaUno > 10 && notaDos > 10 && notaTres > 10) {
-            alert("Los numeros de sus notas son demasiados altos, apriete f5 para volver a iniciar")
-            break
-        }else {
-            let suma = notaUno + notaDos + notaTres
-            let division = suma / 3
-            console.log("Su promedio total es: "+ division)
-    
-            if(division >= 6) {
-                return("Esta aprobado")
-            }else {
-                return("Esta desaprobado")
-            }
-        }
-        
-    }
-};
+let carrito = []
 
-let resultado = promedio(notaUno, notaDos, notaTres);
-console.log(resultado);
+const contenedorProductos = document.getElementById("contenedorProductos")
+
+stockLibros.forEach((producto) => {
+    let div = document.createElement("div")
+    div.classList.add("producto")
+    div.innerHTML = `
+    <img src=${producto.img} alt= "">
+    <h3>${producto.nombre}}</h3>
+    <p class = "precioProducto"> Precio: ${producto.precio}</p>
+    <button id="agregar${producto.id}" class= "botonAgregar">Agregar <i class= fas-fa-shopping-cart></i></button>
+    `
+    contenedorProductos.appendChild(div)
+
+    let boton = document.getElementById(`agregar${producto.id}`)
+    boton.addEventListener(`click`, () => {
+        agregarAlCarrito(producto.id)
+    })
+})
+
+let agregarAlCarrito = (prodId) => {
+    let item = stockLibros.find((prod) => prod.id === prodId)
+    carrito.push(item)
+    console.log(carrito)
+}
